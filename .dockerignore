@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+test
+docs
+.env
+.env.*
+*.log
+.git
+.DS_Store
+requirements.md
+context.md

@@ -1,0 +1,51 @@
+# Render Blueprint for the GoNex backend.
+# Render → New → Blueprint → select this repo. You will be prompted for the
+# `sync: false` secrets. Render terminates HTTPS and sets PORT automatically.
+services:
+  - type: web
+    name: gonex-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    # Singapore is Render's closest region to India.
+    region: singapore
+    # "free" works for testing but sleeps when idle (slow first request). Use "starter" or above for production.
+    plan: starter
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LLM_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: LLM_MODEL
+        value: openai/gpt-oss-120b
+      - key: LLM_REASONING_EFFORT
+        value: low
+      - key: KNOWLEDGE_MODE
+        value: retrieval
+      - key: SERVE_WEB_UI
+        value: "true"
+      - key: TRUST_PROXY
+        value: "true"
+      - key: LOG_LEVEL
+        value: info
+      - key: RATE_LIMIT_MAX
+        value: "20"
+      - key: RATE_LIMIT_WINDOW
+        value: 1 minute
+      # Optional: uncomment together with the Key Value service below to persist
+      # conversations and share rate-limit counters across instances/restarts.
+      # - key: REDIS_URL
+      #   fromService:
+      #     type: keyvalue
+      #     name: gonex-kv
+      #     property: connectionString
+
+  # - type: keyvalue
+  #   name: gonex-kv
+  #   region: singapore
+  #   plan: starter
+  #   maxmemoryPolicy: allkeys-lru
+  #   ipAllowList: []   # only reachable from services in this Render account
