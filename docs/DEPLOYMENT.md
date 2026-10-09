@@ -33,7 +33,7 @@ git push -u origin main
 *Manual alternative:* **New → Web Service → your repo → Runtime: Docker**. Set the health check path to `/health` and add the environment variables from the table below.
 
 ### Plan choice
-`render.yaml` uses the `starter` plan. The `free` plan works for testing, but it spins down when idle, so the first request after idling can take about a minute. That isn't suitable for production.
+`render.yaml` uses the `free` plan, so no payment details are needed. A free service spins down after about 15 minutes idle, and the first request after that takes about a minute. For production, change it to `plan: starter` (paid).
 
 ## 3. Custom domain (optional)
 

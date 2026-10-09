@@ -8,8 +8,8 @@ services:
     dockerfilePath: ./Dockerfile
     # Singapore is Render's closest region to India.
     region: singapore
-    # "free" works for testing but sleeps when idle (slow first request). Use "starter" or above for production.
-    plan: starter
+    # Free plan: sleeps after ~15 min idle (first request then takes ~1 min). Change to "starter" for production.
+    plan: free
     healthCheckPath: /health
     autoDeploy: true
     envVars:
